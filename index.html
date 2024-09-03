@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz sobre Biomas Brasileiros</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #e8f5e9;
+            margin: 0;
+            padding: 20px;
+            text-align: center;
+            background-image: linear-gradient(135deg, #c8e6c9 0%, #a5d6a7 100%);
+        }
+
+        h1 {
+            color: #2e7d32;
+            font-size: 2.5em;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+            margin-bottom: 30px;
+        }
+
+        .question {
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            text-align: left;
+            max-width: 800px;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .question:hover {
+            transform: translateY(-5px);
+        }
+
+        .question p {
+            font-size: 1.2em;
+            margin: 0 0 10px;
+            color: #2e7d32;
+        }
+
+        .question .options {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .question .options li {
+            margin: 10px 0;
+            font-size: 1.1em;
+        }
+
+        .question .options input[type="radio"] {
+            margin-right: 10px;
+            transform: scale(1.2);
+            cursor: pointer;
+        }
+
+        button {
+            padding: 12px 25px;
+            background-color: #2e7d32;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-top: 30px;
+            font-size: 1.2em;
+            text-transform: uppercase;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            transition: background-color 0.3s, transform 0.3s;
+        }
+
+        button:hover {
+            background-color: #1b5e20;
+            transform: translateY(-3px);
+        }
+
+        #result {
+            margin-top: 20px;
+            font-size: 1.5em;
+            color: #2e7d32;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+        }
+
+        #leaderboard {
+            margin-top: 20px;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            display: none;
+        }
+
+        #leaderboard h2 {
+            font-size: 2em;
+            color: #2e7d32;
+            margin-bottom: 20px;
+        }
+
+        #leaderboard ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        #leaderboard li {
+            margin: 10px 0;
+            font-size: 1.1em;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Quiz sobre Biomas Brasileiros</h1>
+    
+    <div id="quiz"></div>
+
+    <button onclick="checkAnswers()">Verificar Respostas</button>
+
+    <div id="result"></div>
+
+    <button id="viewLeaderboard" style="display: none;" onclick="showLeaderboard()">Ver Placar de Líderes</button>
+
+    <div id="leaderboard">
+        <h2>Placar de Líderes</h2>
+        <ul id="leaderboardList"></ul>
+    </div>
+
+    <script>
+        const questions = [
+            {
+                question: "Qual é o bioma predominante na região amazônica do Brasil?",
+                options: [
+                    "Caatinga",
+                    "Pampa",
+                    "Cerrado",
+                    "Mata Atlântica",
+                    "Amazônia"
+                ],
+                correctAnswer: 4
+            },
+            {
+                question: "Qual bioma é caracterizado por um clima seco e vegetação xerófila?",
+                options: [
+                    "Pantanal",
+                    "Cerrado",
+                    "Mata Atlântica",
+                    "Pampa",
+                    "Caatinga"
+                ],
+                correctAnswer: 4
+            },
+            {
+                question: "Qual bioma é conhecido por sua vegetação de cerrado e savana?",
+                options: [
+                    "Amazônia",
+                    "Pantanal",
+                    "Cerrado",
+                    "Mata Atlântica",
+                    "Pampa"
+                ],
+                correctAnswer: 2
+            },
+            {
+                question: "Qual bioma está localizado na região sul do Brasil e é conhecido por suas pradarias?",
+                options: [
+                    "Pampa",
+                    "Caatinga",
+                    "Pantanal",
+                    "Amazônia",
+                    "Cerrado"
+                ],
+                correctAnswer: 0
+            },
+            {
+                question: "Qual é o bioma que apresenta uma rica biodiversidade e é encontrado na região costeira brasileira?",
+                options: [
+                    "Pantanal",
+                    "Cerrado",
+                    "Mata Atlântica",
+                    "Pampa",
+                    "Caatinga"
+                ],
+                correctAnswer: 2
+            },
+            {
+                question: "Qual bioma é conhecido pela presença de manguezais e alagados?",
+                options: [
+                    "Amazônia",
+                    "Pantanal",
+                    "Cerrado",
+                    "Mata Atlântica",
+                    "Pampa"
+                ],
+                correctAnswer: 1
+            },
+            {
+                question: "Qual bioma é caracterizado por uma vegetação predominantemente arbórea e alta pluviosidade?",
+                options: [
+                    "Cerrado",
+                    "Mata Atlântica",
+                    "Pantanal",
+                    "Pampa",
+                    "Caatinga"
+                ],
+                correctAnswer: 1
+            },
+            {
+                question: "Qual bioma é encontrado principalmente na região nordeste do Brasil e é conhecido pela vegetação xerófila?",
+                options: [
+                    "Pantanal",
+                    "Pampa",
+                    "Cerrado",
+                    "Mata Atlântica",
+                    "Caatinga"
+                ],
+                correctAnswer: 4
+            },
+            {
+                question: "Qual bioma é um dos mais úmidos do Brasil, localizado na região centro-oeste?",
+                options: [
+                    "Cerrado",
+                    "Pampa",
+                    "Mata Atlântica",
+                    "Pantanal",
+                    "Caatinga"
+                ],
+                correctAnswer: 3
+            }
+        ];
+
+        function shuffle(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+        }
+
+        function loadQuiz() {
+            const quizContainer = document.getElementById('quiz');
+            quizContainer.innerHTML = '';
+            shuffle(questions);
+            
+            questions.forEach((q, index) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.className = 'question';
+
+                const questionText = document.createElement('p');
+                questionText.innerText = `${index + 1}. ${q.question}`;
+                questionDiv.appendChild(questionText);
+
+                shuffle(q.options);
+                
+                const optionsList = document.createElement('ul');
+                optionsList.className = 'options';
+                
+                q.options.forEach((option, i) => {
+                    const optionItem = document.createElement('li');
+                    const optionInput = document.createElement('input');
+                    optionInput.type = 'radio';
+                    optionInput.name = `question${index}`;
+                    optionInput.value = i;
+                    optionItem.appendChild(optionInput);
+
+                    const optionLabel = document.createElement('label');
+                    optionLabel.innerText = option;
+                    optionItem.appendChild(optionLabel);
+
+                    optionsList.appendChild(optionItem);
+                });
+
+                questionDiv.appendChild(optionsList);
+                quizContainer.appendChild(questionDiv);
+            });
+        }
+
+        function checkAnswers() {
+            let score = 0;
+            const startTime = performance.now();
+
+            questions.forEach((q, index) => {
+                const selectedOption = document.querySelector(`input[name="question${index}"]:checked`);
+                if (selectedOption && parseInt(selectedOption.value) === q.correctAnswer) {
+                    score++;
+                }
+            });
+
+            const elapsedTime = (performance.now() - startTime) / 1000; // Calcula o tempo em segundos
+
+            document.getElementById('result').innerText = `Você acertou ${score} de ${questions.length} perguntas em ${elapsedTime.toFixed(2)} segundos!`;
+
+            // Adiciona a pontuação ao placar de líderes
+            const leaderboardList = document.getElementById('leaderboardList');
+            const leaderboardItem = document.createElement('li');
+            leaderboardItem.innerText = `Usuário - ${score} pontos em ${elapsedTime.toFixed(2)} segundos`;
+            leaderboardList.appendChild(leaderboardItem);
+            document.getElementById('leaderboard').style.display = 'block';
+            document.getElementById('viewLeaderboard').style.display = 'block';
+        }
+
+        function showLeaderboard() {
+            document.getElementById('leaderboard').style.display = 'block';
+        }
+
+        loadQuiz();
+    </script>
+
+</body>
+</html>
